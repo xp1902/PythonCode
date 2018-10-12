@@ -1,0 +1,47 @@
+{% load staticfiles %}
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>魏冰心丨个人信息</title>
+
+        <!-- Bootstrap -->
+        <link href="{% static 'tlion/css/bootstraps.min.css' %}" rel="stylesheet">
+		<link href="{% static 'tlion/css/styles.css?ver=2' %}" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="{% static 'tlion/css/font-awesome.min.css' %}" />
+		<script type="text/javascript" src="{% static 'tlion/js/main.js' %}"></script>
+    </head>
+    <body>
+		<!-- 上方导航栏 -->
+		<div class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">切换导航</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="#ad-carousel" class="navbar-brand">魏冰心</a>
+			  </div>
+			  <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
+			  <div class="collapse navbar-collapse navbar-responsive-collapse" id="collapse">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#ad-carousel">主页面</a></li>
+						<li><a href="#ad-carousel">个人简介</a></li>
+						<li><a href="#tech-container">专业技能</a></li>
+						<li><a href="#beloved-container">我的爱好</a></li>
+						<li><a href="#contact-me">与我联系</a></li>
+					</ul>
+			  </div>
+			</div>
+		</div>
+		<!-- 上方导航栏结束 -->
+
+
+    </body>
+</html>
+
+
+

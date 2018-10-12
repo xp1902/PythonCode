@@ -1,0 +1,175 @@
+{% extends 'tlion/base.html' %}
+{% load staticfiles %}{% load tlion_tags %}
+{% block title %}<title>article page</title>
+{% endblock %}
+{% block h1 %}<a href="{% url 'tlion:index' %}"><img src="{% static 'tlion/img/back.jpg' %}" height="40" width="40"> </a>{% endblock %}
+{% block main %}
+    <article class="post post-1">
+        <header class="entry-header">
+            <h1 class="entry-title">{{ article.title }}</h1>
+            <div class="entry-meta">
+                <span class="post-category"><a href="#">{{ article.category }}</a></span>
+
+                <span class="post-date"><a href="#"><time class="entry-date" datetime="{{ article.create_time }}">{{ article.create_time }}</time></a></span>
+
+                <span class="post-author"><a href="#">{{ article.author }}</a></span>
+
+                <span class="post-author"><a href="{% url 'tlion:likes' article.pk %}">{{ article.likes }}likes</a></span>
+
+                <span class="post-author"><a href="">{{ article.views }}views</a></span>
+
+                <span class="comments-link"><a href="#comments">{{ article.comments_num }}comments</a></span>
+            </div>
+            <div class="entry-meta">
+                <span class="center"><a href="{% url 'tlion:edit_page' article.id %}">修改文章</a></span>
+            </div>
+        </header>
+        <div class="entry-content clearfix">
+            {{ article.content|safe }}
+        </div>
+    </article>
+    <!--<section class="comment-area">
+        <!-- UY BEGIN -->
+        <!--<a name="comments" hidden></a>
+        <!--<div id="uyan_frame"></div>
+        <!--<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2131702"></script>
+        <!-- UY END -->
+    <!--</section>-->
+        <form action="{% url 'comments:article_comment' article.id %}" method="post" class="comment-form">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-4">
+                <label for="{{ form.name.id_for_label }}"></label>
+                {{ form.name }}
+            </div>
+
+            <div class="col-md-4">
+                <label for="{{ form.email.id_for_label }}"></label>
+                {{ form.email }}
+            </div>
+
+            <div class="col-md-4">
+                <label for="{{ form.url.id_for_label }}"></label>
+                {{ form.url }}
+            </div>
+
+            <div class="col-md-12">
+                {{ form.content }}
+                <button class="btn-send btn-5 btn-5b ion-ios-paperplane"><span>发✈表</span></button>
+            </div>
+        </div>    <!-- row -->
+    </form>
+
+    <!--<form id="user_content" method = 'post' enctype="multipart/form-data">
+        <textarea cols="40" id="id_content" name="content" rows="10"></textarea>
+        <input id=‘put‘ type="submit" value = "提交" />
+    </form>
+
+    <!--<form id="user_content" method="post" class="comment-form" enctype="multipart/form-data">
+        <div class="row">
+            <input hidden value="">
+            <div class="col-md-4">
+                <input type="text" name="name" placeholder="名字" required>
+            </div>
+            <div class="col-md-4">
+                <input type="email" name="email" placeholder="邮箱" required>
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="url" id="id_content" placeholder="网址" required>
+            </div>
+            <div class="col-md-12">
+                <textarea name="comment" id="id_content" rows="7" placeholder="" required></textarea>
+                <button class=""><span>发表</span></button>
+            </div>
+        </div>    <!-- row -->
+
+    <div class="comment-list">
+            <h2><a name="comments">评论列表({{ article.comments_num }}人评论)：</a></h2>
+            <ul class="list-unstyled">
+                {% build_comment_tree comments %}
+                <p>没有过多的评论了？！！</p>
+            </ul>
+    </div>
+{% endblock %}
+{% block aside %}
+    <section id="text-20" class="block widget">
+                                <div class="textwidget"><script async src="{% static 'tlion/js/adsbygoogle.js' %}"></script>
+                            <!-- 自适应_右侧栏 -->
+                                    <p class="ui red text-center">文章专栏：</p>
+                                <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                                </script></div>
+                            </section>
+
+    <section id="text-15" class="block widget widget_text">
+                                <p class="ui red ribbon label">新文章：</p>
+                                <div class="textwidget">
+                                    {% get_recent_articles as articles %}
+                                <ul>
+                                    {% for article in articles %}
+                                    <li class="recent-comments">
+                                        <a href="{{ article.get_absolute_url }}">
+                                            <div class="recent-avatar"><img alt='' src='/tlion/static/tlion/img/{{ article.head_img }}' height='32' width='32' /></div>
+                                            <div class="recent-body">
+                                                <p class="recent-author">{{ article.author }}:</p>
+                                                <p class="recent-text">{{ article.title }}</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul></div>
+                            </section>
+
+    <section id="text-15" class="block widget widget_category">
+                                <p class="ui red ribbon label">文章分类：</p>
+                                <div class="textwidget">
+                                    {% get_categories as categories %}
+                                <ul>
+                                    {% for category in categories %}
+                                    <li class="recent-comments">
+                                        <a href="{% url 'tlion:category' category.id %}">
+
+                                            <P align="center">{{ category.name }}</P>
+
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul></div>
+                            </section>
+
+    <section id="text-15" class="block widget widget_tags">
+                                <p class="ui red ribbon label">文章标签：</p>
+                                <div class="textwidget">
+                                    {% get_tags as tags %}
+                                <ul>
+                                    {% for tag in tags %}
+                                    <li class="recent-comments">
+                                        <a href="{% url 'tlion:tag' tag.id %}">
+
+                                            <p align="center">{{ tag.name }}</p>
+
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul></div>
+                            </section>
+
+    <section id="views-3" class="block widget widget_archives">
+                                <p class="ui red ribbon label">归档：</p>
+                                {% archives as dates %}
+                                <ul>
+                                    {% for date in dates %}
+                                <li>
+                                    <a href="{% url 'tlion:archives' date.year date.month %}"><p align="center">{{ date.year }}年{{ date.month }}月</p></a>
+                                </li>
+                                    {% endfor %}
+                                </ul>
+                            </section>
+
+    <section id="text-8" class="block widget widget_text">
+                            <div class="textwidget">
+                                <div class="close-side">关闭侧边栏</div>
+                                <br>
+                            </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'tlion/base.html' %}
+{% load staticfiles %}
+{% block title %}
+    <title>编写文章</title>
+{% endblock %}
+{% block h1 %}
+    <a href="{% url 'tlion:index' %}"><img src="{% static 'tlion/img/back.jpg' %}" height="40" width="40"></a>
+{% endblock %}
+{% block main %}
+    <section class="comment-area">
+    <form action="{% url 'tlion:edit_action' %}" method="post" class="comment-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-6">
+            <label for="{{ form.title.id_for_label }}">标题：</label>
+            {{ form.title }}
+            <label for="{{ form.author.id_for_label }}">作者：</label>
+            {{ form.author}}
+        </div><br>
+
+        <div class="col-md-12">
+            <label for="{{ form.content.id_for_label }}"></label>
+            {{ form.content }}
+            <br>
+        </div>
+
+        <div class="col-md-9">
+            <label for="{{ form.status.id_for_label }}">是否立即发表：？</label>
+            {{ form.status}}
+        </div>
+
+        <div class="col-md-9">
+            <label for="{{ form.category.id_for_label }}">文章分类：</label>
+            {{ form.category}}
+            {{ form.category.errors }}
+        </div>
+
+        <div class="col-md-6">
+            <label for="{{ form.tags.id_for_label }}">标签：</label>
+            {{ form.tags}}
+        </div>
+
+        <div class="col-md-6">
+            <input type="file" value="选择" name="head_img" class=" ">
+        </div>
+
+        <div class="col-md-12">
+            <button name="submit" class="btn-send btn-5 btn-5b ion-ios-paperplane">这么快就完成~\(≧▽≦)/~啦啦啦</button>
+        </div>
+    </div>
+    </form>
+    </section>
+    {% endblock %}
+{% block aside %}
+    <section class="widget block">
+
+        <script type="text/javascript" src="//rf.revolvermaps.com/0/0/6.js?i=5mj9a4iaa8b&amp;m=0&amp;c=ff0000&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;s=170&amp;bv=10" async="async"></script>
+
+    </section>
+    <section class="widget block">
+
+        <script charset="Shift_JIS" src="http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_tr.js"></script>
+
+    </section>
+{% endblock %}

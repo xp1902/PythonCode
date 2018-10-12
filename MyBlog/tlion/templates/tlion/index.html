@@ -1,0 +1,200 @@
+{% extends 'tlion/base.html' %}
+{% block title %}
+    {% load staticfiles %}
+    {% load tlion_tags %}
+    <title>My&Blog</title>
+{% endblock %}
+{% block statics %}
+    <style type='text/css'>
+
+        .is-animate.style1 > div { animation-name: style1; }
+
+        .is-animate > div {
+          animation-duration: 1s;
+          animation-fill-mode: both;
+          animation-iteration-count: infinite;
+        }
+
+        .is-animate > div:nth-child(1) { animation-delay: 0.0s }
+        .is-animate > div:nth-child(2) { animation-delay: 0.1s }
+        .is-animate > div:nth-child(3) { animation-delay: 0.2s }
+
+    </style>
+    <link rel="stylesheet" href="{% static 'tlion/css/animations.css'%}">
+    <script>
+            $(document).ready(function(){
+            $('#view_collect').click(function(){
+
+                $.post("{% url 'tlion:views' %}",{
+                    id:'{{ article.id }}'
+                });
+            });
+        });
+    </script>
+{% endblock %}
+{% block h1 %}<a href="{% url 'tlion:edit_action' %}">
+    <h1>
+        new article
+    </h1>
+</a>{% endblock %}
+{% block main %}
+    {% load tlion_tags %}
+    {% load paginate_tags %}
+    {% load hitcount_tags %}
+    {% paginate articles 3 %}
+
+    {% for article in articles %}
+        <section class="block widget">
+            <article class="post block">
+                <header class="entry-header">
+                    <h1 class="entry-title">
+                        <a href="{{ article.get_absolute_url }}" class="" id="view_collect">{{ article.title }}</a>
+                    </h1>
+                    <div class="entry-meta">
+                            <span class="post-category"><a href="{% url 'tlion:category' article.category_id %}">{{ article.category }}</a></span>
+
+                            <span class="post-date"><a href="#"><time class="entry-date" datetime="{{ article.create_time }}">{{ article.create_time }}</time></a></span>
+
+                            <span class="post-author"><a href="#">{{ article.author }}</a></span>
+
+                            <span class="post-author"><a href="#">{{ article.views }}浏览</a></span>
+
+                            <span class="post-author"><a href="#">{{ article.likes }}喜欢</a></span>
+
+                            <span class="comments"><a href="#">{{ article.comments_num }}comments</a></span>
+                    </div>
+                </header>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <a href="{{ article.get_absolute_url }}" class="more-link" id="view_collect"><img src="/tlion/static/tlion/img/{{ article.head_img }}" class="img-rounded" alt="{{ article.title }}"></a>
+                    </div>
+                    <div class="noteentry-content clearfix note">
+                        <p><br><br>{{ article.excerpt }}...</p>
+                    </div>
+                </div>
+
+                <div class="read-more cl-effect-14">
+                    <a href="{{ article.get_absolute_url }}" class="more-link" id="view_collect">Continue readinG<span class="meta-nav">→</span></a>
+                </div>
+            </article>
+        </section>
+    {% empty %}
+        <div class="no-post"><p>暂时还没有发布的文章！</p>
+        </div>
+    {% endfor %}
+    <section class="widget block col-md-12">
+        <div class="pagination">
+        <strong>{% include 'tlion/pagination.html' %}</strong>
+        </div>
+    </section>
+
+{% endblock %}
+{% block aside %}
+    <section id="text-11" class="block widget widget_text">
+                            <div class="textwidget">
+                                <div class="ca-container">
+                            <div class="ca-head">
+                                <div class="ca-head-container">
+                                    <img src="{% static 'tlion/img/timg.gif' %}">
+                                    <h1><span>Tlion</span>魏冰心BLOG</h1>
+                                </div>
+                            </div>
+                            <div class="ca-body">
+                                <p>你能抓到我么？</p>
+                                <div class="catch-me">
+                                    <div>
+                                    <a data-balloon="Rss" data-balloon-pos="up" target="_blank" href="https://www.anotherhome.net/feed"><i class="fa fa-rss">1</i></a>
+                                    <a data-balloon="微博" data-balloon-pos="up" target="_blank" href="http://weibo.com/anotherhome" class="external" rel="nofollow"><i class="fa fa-weibo">fe1</i></a>
+                                    <a data-balloon="GitHub" data-balloon-pos="up" target="_blank" href="https://github.com/DIYgod" class="external" rel="nofollow"><i class="fa fa-github">1fe</i></a>
+                                    </div>
+                                    <div>
+                                    <a data-balloon="Instagram" data-balloon-pos="up" target="_blank" href="https://www.instagram.com/diygod" style="display:none;" class="external" rel="nofollow"><i class="fa fa-instagram">1fe</i></a>
+                                    <a data-balloon="QQ群" data-balloon-pos="up" target="_blank" href="https://diygod.b0.upaiyun.com/qq-g.jpg" class="external" rel="nofollow"><i class="fa fa-qq">1QQ</i></a>
+                                    <a data-balloon="微信公众号" data-balloon-pos="up" target="_blank" href="https://diygod.b0.upaiyun.com/gzh.jpg" class="external" rel="nofollow"><i class="fa fa-wechat">zhi</i></a>
+                                    <a data-balloon="telegram" data-balloon-pos="up" target="_blank" href="https://telegram.me/prpr233" class="external" rel="nofollow"><i class="fa fa-telegram">zhi</i></a>
+                                    <a data-balloon="知乎" data-balloon-pos="up" target="_blank" href="https://www.zhihu.com/people/diygod" class="external" rel="nofollow"><i  class="fa" style="font-weight: 500;">知</i></a>
+                                    </div>
+                                </div>
+                            </div>
+                                </div>
+                            </div>
+                        </section>
+
+    <section id="text-4" class="block widget widget_text">
+                        <div class="textwidget">
+                                <div class='like-vote'>
+                                    <p class='like-title'>Do you like me?</p>
+                                    <div class='like-count'>
+                                        <p class="fa fa-heart"></p><span>❤likes</span>
+                                    </div><br>
+                                </div>
+                        </div>
+		</section>
+
+    <section id="text-20" class="block widget">
+                            <div class="textwidget"><script async src="{% static 'tlion/js/adsbygoogle.js' %}"></script>
+                        <!-- 自适应_右侧栏 -->
+                                <p class="ui red text-center"><span><--文章专栏--></span></p>
+                            <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script></div>
+                        </section>
+
+    <section id="text-15" class="block widget widget_text">
+                            <p class="ui red ribbon label">新文章：</p>
+                            <div class="textwidget">
+                                {% get_recent_articles as articles %}
+							<ul>
+                                {% for article in articles %}
+								<li class="recent-comments">
+									<a href="{{ article.get_absolute_url }}">
+                                        <div class="recent-avatar"><img src='/tlion/static/tlion/img/{{ article.head_img }}' height='32' width='32' /></div>
+                                        <div class="recent-body">
+                                            <p class="recent-author">{{ article.author }}:</p>
+                                            <p class="recent-text">{{ article.title }}</p>
+                                        </div>
+                                    </a>
+								</li>
+                                {% endfor %}
+                            </ul></div>
+                        </section>
+
+    <section id="text-15" class="block widget widget_category">
+                            <p class="ui red ribbon label">文章分类：</p>
+                            <div class="textwidget">
+                                {% get_categories as categories %}
+							<ul>
+                                {% for category in categories %}
+								<li class="recent-comments">
+									<a href="{% url 'tlion:category' category.id %}">
+
+                                        {{ category.name }}
+
+                                    </a>
+								</li>
+                                {% endfor %}
+                            </ul></div>
+                        </section>
+
+    <section id="views-3" class="block widget widget_archives">
+                            <p class="ui red ribbon label">归档：</p>
+                            {% archives as dates %}
+                            <ul>
+                                {% for date in dates %}
+                            <li>
+                                <a href="{% url 'tlion:archives' date.year date.month %}">{{ date.year }}年{{ date.month }}月</a>
+                            </li>
+                                {% endfor %}
+                            </ul>
+                        </section>
+
+    <section id="text-8" class="block widget widget_text">
+                            <div class="textwidget">
+                                <div class="close-side">关闭侧边栏</div>
+                                <br>
+                            </div>
+                        </section>
+{% endblock %}
+{% block footer %}
+    <a href="#" id="scroll-top" style="display: inline;"><img src="{% static 'tlion/img/up.png' %}"></a>
+{% endblock %}

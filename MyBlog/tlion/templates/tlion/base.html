@@ -1,0 +1,111 @@
+{% load tlion_tags %}
+{% load paginate_tags %}
+<!DOCTYPE html>
+<html>
+	<head>
+		{% block title %}{% endblock %}
+
+		<!-- meta -->
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load staticfiles %}
+
+	    <!-- css -->
+        <link rel="stylesheet" href="{% static 'tlion/css/animations.css'%}">
+        <link rel="stylesheet" href="{% static 'tlion/css/styles.css' %}">
+        <link rel="stylesheet" href="{% static 'tlion/css/style.css' %}">
+		<link rel="stylesheet" href="{% static 'tlion/css/bootstrap.min.css' %}">
+		<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="{% static 'tlion/css/pace.css' %}">
+	    <link rel="stylesheet" href="{% static 'tlion/css/custom.css' %}">
+
+	    <!-- js -->
+	    <script src="{% static 'tlion/js/jquery-2.1.3.min.js' %}"></script>
+	    <script src="{% static 'tlion/js/bootstrap.min.js' %}"></script>
+	    <script src="{% static 'tlion/js/pace.min.js' %}"></script>
+        {% block statics %}{% endblock %}
+	</head>
+	<body>
+        <div>
+			<header id="site-header">
+				<div class="row">
+					<div class="col-md-4 col-sm-5 col-xs-8">
+						<div class="logo">
+							{% block h1 %}{% endblock %}
+						</div>
+					</div><!-- col-md-4 -->
+					<div class="col-md-8 col-sm-7 col-xs-4">
+						<nav class="main-nav" role="navigation">
+							<div class="navbar-header">
+  								<button type="button" id="trigger-overlay" class="navbar-toggle">
+    								<span class="ion-navicon"></span>
+  								</button>
+							</div>
+							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+  								<ul class="nav navbar-nav navbar-right" id="menu-top-menu">
+    								<li class="cl-effect-11"><a href="{% url 'tlion:index' %}" data-hover="Home">Home</a></li>
+    								<li class="cl-effect-11"><a href="#" data-hover="Blog">Blog</a></li>
+    								<li class="cl-effect-11"><a href="about.html" data-hover="About">About</a></li>
+                                    <li class="cl-effect-11"><a href="{% url 'tlion:contact' %}" data-hover="Contact">Contact</a></li>
+    								<li class="cl-effect-11"><a href="#" data-hover="More">More</a></li>
+  								</ul>
+							</div><!-- /.navbar-collapse -->
+						</nav>
+
+						<div id="header-search-box">
+							<a id="search-menu" href="#"><span id="search-icon" class="ion-ios-search-strong"></span></a>
+							<div id="search-form" class="search-form">
+								<form role="search" method="get" id="searchform" action="#">
+									<input type="search" placeholder="Search" required>
+									<button type="submit"><span class="ion-ios-search-strong"></span></button>
+								</form>
+							</div>
+						</div>
+
+					</div><!-- col-md-8 -->
+				</div>
+			</header>
+		</div>
+
+		<div class="copyrights">Collect from waper template and so..on..</div>
+
+		<div class="content-body">
+			<div class="container">
+				<div class="row">
+					<main class="col-md-8">
+						{% block main %}{% endblock %}
+					</main>
+
+					<aside class="col-md-4">
+                        {% block aside %}{% endblock %}
+				    </aside>
+                </div>
+			</div>
+		</div>
+
+		<footer id="site-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+                        <p class="copyright">访问统计量{% get_count %}</p>
+                        <p class="copyright">&copy; 2014 ThemeWagon.com -More Templates <a href=" " target="_blank" title="模板之家"></a> - Collect from <a href=" " title="网页模板" target="_blank"></a></p>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!-- Mobile Menu -->
+
+		<div class="overlay overlay-hugeinc">
+			<button type="button" class="overlay-close"><span class="ion-ios-close-empty"></span></button>
+			<nav>
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="full-width.html">Blog</a></li>
+					<li><a href="about.html">About</a></li>
+					<li><a href="contact.html">Contact</a></li>
+				</ul>
+			</nav>
+		</div>
+    {% block footer %}{% endblock %}
+    </body>
+</html>
